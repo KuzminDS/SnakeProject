@@ -36,23 +36,20 @@ namespace Snake
         Direction direction = Direction.Right;
         Feed feed = new Feed(snakeSize);
 
-        SnakePart snakeHead = new SnakePart(snakeSize)
+        SnakePart snakeHead = new SnakePart(snakeSize, true)
         {
-            IsHead = true,
             PosX = startPosition,
             PosY = startPosition,
         };
 
-        SnakePart snakePart1 = new SnakePart(snakeSize)
+        SnakePart snakePart1 = new SnakePart(snakeSize, false)
         {
-            IsHead = false,
             PosX = startPosition - snakeSize,
             PosY = startPosition,
         };
 
-        SnakePart snakePart2 = new SnakePart(snakeSize)
+        SnakePart snakePart2 = new SnakePart(snakeSize, false)
         {
-            IsHead = false,
             PosX = startPosition - 2*snakeSize,
             PosY = startPosition,
         };
@@ -112,9 +109,8 @@ namespace Snake
 
                 if (snake[0].PosX == feed.PosX && snake[0].PosY == feed.PosY)
                 {
-                    SnakePart snakePart = new SnakePart(snakeSize)
+                    SnakePart snakePart = new SnakePart(snakeSize, false)
                     {
-                        IsHead = false,
                         PosX = snake.Last().PosX,
                         PosY = snake.Last().PosY,
                     };
@@ -125,7 +121,19 @@ namespace Snake
                     GenerateFeed(snake);
                 }
 
+                if(snake[0].PosX < 0 || snake[0].PosX > 400 || snake[0].PosY < 0 || snake[0].PosY > 500)
+                {
+                    MessageBox.Show("Game over!", "Snake", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+                }
+                else if(snake.Where(s => s.PosX == snake[0].PosX && s.PosY == snake[0].PosY).Count() > 1)
+                {
+                    MessageBox.Show("Game over!", "Snake", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+                }
+
             }
+
         }
 
         private void GameField_PreviewKeyDown(object sender, KeyEventArgs e)

@@ -11,12 +11,12 @@ namespace Snake.Common
 {
     public class SnakePart
     {
-        public SnakePart(int snakeSize)
+        public SnakePart(int snakeSize, bool isHead)
         {
             Rectangle = new Rectangle();
             Rectangle.Width = snakeSize;
             Rectangle.Height = snakeSize;
-            Rectangle.Fill = IsHead ? new SolidColorBrush(Colors.LightGreen)
+            Rectangle.Fill = isHead ? new SolidColorBrush(Colors.LightGreen)
                                     : new SolidColorBrush(Colors.Green);
         }
 
@@ -25,6 +25,5 @@ namespace Snake.Common
 
         public int PosY { get; set; }
 
-        public bool IsHead { get; set; }
     }
 }
